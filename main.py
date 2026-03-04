@@ -5,21 +5,25 @@ from datetime import datetime
 
 load_dotenv()
 
-API_KEY = os.getenv("API_KEY")
+# Nutrition APP ID and API Key.
 APP_ID = os.getenv("APP_ID")
+APP_KEY = os.getenv("APP_KEY")
 
+# Your personal data
 GENDER = "male"
 WEIGHT_KG = 80
 HEIGHT_CM = 183
 AGE = 27
 
+
 exercise_endpoint = os.getenv("exercise_endpoint")
 
 exercise_text = input("Tell me which exercises you did: ")
 
+#API call
 headers = {
     "x-app-id": APP_ID,
-    "x-app-key": API_KEY,
+    "x-app-key": APP_KEY,
 
 }
 
@@ -41,9 +45,11 @@ print(f"Nutritionix API call: \n {result} \n")
 today_date = datetime.now().strftime("%d/%m/%Y")
 now_time = datetime.now().strftime("%X")
 
+# Sheety Project API
 GOOGLE_SHEET_NAME = "workout"
 sheet_endpoint = os.getenv("SHEET_ENDPOINT")
 
+# Sheety API Call
 for exercise in result["exercises"]:
     sheet_inputs = {
         GOOGLE_SHEET_NAME: {
@@ -57,4 +63,5 @@ for exercise in result["exercises"]:
 
     sheet_response = requests.post(sheet_endpoint, json=sheet_inputs)
     print(f"Sheety Response: \n {sheet_response.text}")
+
 
